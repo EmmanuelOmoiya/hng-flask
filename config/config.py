@@ -15,5 +15,8 @@ app = {
 
 db = {
     "username": os.getenv('DB_USERNAME'),
-    "password": os.getenv('DB_PASSWORD')
+    "password": os.getenv('DB_PASSWORD'),
+    "port": os.getenv('DB_PORT'),
+    "db": os.getenv('DB_DB'),
+    "server": os.getenv('DB_SERVER'),
 }
