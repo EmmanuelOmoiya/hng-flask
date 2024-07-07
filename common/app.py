@@ -4,7 +4,6 @@ import config.config as cfg
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = cfg.app["secret"]
-# app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://{cfg.db["username"]}:{cfg.db["password"]}@{cfg.db["server"]}:{cfg.db["port"]}/{cfg.db["db"]}'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{cfg.db["username"]}:{cfg.db["password"]}@{cfg.db["server"]}:{cfg.db["port"]}/{cfg.db["db"]}'
 app.config["JWT_SECRET_KEY"] = cfg.jwt["secret"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
