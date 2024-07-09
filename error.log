@@ -1,13 +1,7 @@
 INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
+ERROR:common.app:Exception on /auth/register [POST]
 Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 146, in __init__
     self._dbapi_connection = engine.raw_connection()
@@ -52,7 +46,7 @@ Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\psycopg2\__init__.py", line 122, in connect
     conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-psycopg2.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "orgenz" does not exist
+psycopg2.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "postgresql" does not exist
 
 
 The above exception was the direct cause of the following exception:
@@ -73,27 +67,61 @@ Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 29, in login
-    user = User.query.filter_by(email=data['email']).first()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
-    return self.limit(1)._iter().first()  # type: ignore
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-                                                  ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2226, in _execute_internal
-    conn = self._connection_for_bind(bind)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2095, in _connection_for_bind
-    return trans._connection_for_bind(engine, execution_options)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
+    return register(data)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 30, in register
+    db.session.commit()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2017, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1302, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1277, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4341, in flush
+    self._flush(objects)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4476, in _flush
+    with util.safe_reraise():
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4437, in _flush
+    flush_context.execute()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 60, in save_obj
+    for (
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 223, in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1753, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in connection
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1039, in connection
+    return self._connection_for_bind(bind, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1175, in _connection_for_bind
+    conn = self._parent._connection_for_bind(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "<string>", line 2, in _connection_for_bind
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
     ret_value = fn(self, *arg, **kw)
@@ -151,238 +179,22 @@ Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\psycopg2\__init__.py", line 122, in connect
     conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "orgenz" does not exist
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "postgresql" does not exist
 
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 17:10:27] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-ERROR:common.app:Exception on /auth/login [POST]
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 14:53:02] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+ERROR:common.app:Exception on /auth/register [POST]
 Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
 psycopg2.errors.UndefinedTable: relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 29, in login
-    user = User.query.filter_by(email=data['email']).first()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
-    return self.limit(1)._iter().first()  # type: ignore
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-                                                  ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-[SQL: SELECT "user"."userId" AS "user_userId", "user"."firstName" AS "user_firstName", "user"."lastName" AS "user_lastName", "user".email AS user_email, "user".password AS user_password, "user".phone AS user_phone 
-FROM "user" 
-WHERE "user".email = %(email_1)s 
- LIMIT %(param_1)s]
-[parameters: {'email_1': 'emmanuelomoiya6@gmail.com', 'param_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 17:16:23] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedTable: relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 29, in login
-    user = User.query.filter_by(email=data['email']).first()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2728, in first
-    return self.limit(1)._iter().first()  # type: ignore
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2827, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-                                                  ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2236, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-[SQL: SELECT "user"."userId" AS "user_userId", "user"."firstName" AS "user_firstName", "user"."lastName" AS "user_lastName", "user".email AS user_email, "user".password AS user_password, "user".phone AS user_phone 
-FROM "user" 
-WHERE "user".email = %(email_1)s 
- LIMIT %(param_1)s]
-[parameters: {'email_1': 'emmanuelomoiya6@gmail.com', 'param_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 17:51:01] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:43:16] "[31m[1mPOST /auth/login HTTP/1.1[0m" 401 -
-ERROR:common.app:Exception on /auth/register [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
-    return register(data)
-           ^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 10, in register
-    access_token = create_access_token(identity=user.userId)
-                                                ^^^^^^^^^^^
-AttributeError: 'tuple' object has no attribute 'userId'
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:44:08] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:49:25] "[31m[1mPOST /auth/register HTTP/1.1[0m" 422 -
-ERROR:common.app:Exception on /auth/register [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
-    return register(data)
-           ^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 19, in register
-AttributeError: module 'bcrypt' has no attribute 'generate_password_hash'
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:51:08] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/register [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.errors.StringDataRightTruncation: value too long for type character varying(120)
+LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
+                    ^
 
 
 The above exception was the direct cause of the following exception:
@@ -462,19 +274,26 @@ Traceback (most recent call last):
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-sqlalchemy.exc.DataError: (psycopg2.errors.StringDataRightTruncation) value too long for type character varying(120)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
+LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
+                    ^
 
 [SQL: INSERT INTO "user" ("userId", "firstName", "lastName", email, password, phone) VALUES (%(userId)s, %(firstName)s, %(lastName)s, %(email)s, %(password)s, %(phone)s)]
-[parameters: {'userId': '3f8c1d89-9a72-456a-94b4-44e951cba6b9', 'firstName': 'Emmanuel', 'lastName': 'Omoiya', 'email': 'emmanuelomoiya6@gmail.com', 'password': b'$2b$12$vIlavvuf1ThZ6tH301aAKux3jwTqs1ZoHV5pCMLD0.DYlNldCatxW', 'phone': '+2347043738436'}]
-(Background on this error at: https://sqlalche.me/e/20/9h9h)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:54:42] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+[parameters: {'userId': '23a5f5a8-cc33-4ec7-a242-aa74210f1b02', 'firstName': 'Emmanuel', 'lastName': 'Omoiys', 'email': 'emmanuelomoiya7@gmail.com', 'password': b'$2b$12$.q3bGmw7UYgp93oMMkO0BuImNje0k1AubJ1W6HV19zfFRYPBsvfIW', 'phone': '+2347043738436'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 14:53:57] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
 ERROR:common.app:Exception on /auth/register [POST]
 Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-psycopg2.errors.StringDataRightTruncation: value too long for type character varying(120)
+psycopg2.errors.UndefinedTable: relation "user" does not exist
+LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
+                    ^
 
 
 The above exception was the direct cause of the following exception:
@@ -554,24 +373,26 @@ Traceback (most recent call last):
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-sqlalchemy.exc.DataError: (psycopg2.errors.StringDataRightTruncation) value too long for type character varying(120)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
+LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
+                    ^
 
 [SQL: INSERT INTO "user" ("userId", "firstName", "lastName", email, password, phone) VALUES (%(userId)s, %(firstName)s, %(lastName)s, %(email)s, %(password)s, %(phone)s)]
-[parameters: {'userId': '3f8c1d89-9a72-456a-94b4-44e951cba6b9', 'firstName': 'Emmanuel', 'lastName': 'Omoiya', 'email': 'emmanuelomoiya6@gmail.com', 'password': b'$2b$12$HpHtkpShZUiOBgDPZ6V.W.Ju2yt1TalV.IUU9M/DUj/8hzU30n7re', 'phone': '+2347043738436'}]
-(Background on this error at: https://sqlalche.me/e/20/9h9h)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 18:59:04] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+[parameters: {'userId': '8603aea2-3127-43a6-88ca-2d6490562b0a', 'firstName': 'Emmanuel', 'lastName': 'Omoiys', 'email': 'emmanuelomoiya7@gmail.com', 'password': b'$2b$12$PKf6V7sFqKsmzBOv.nxpqe1nAVH65bGGngdtRRzBWPJxxDTiUCZoW', 'phone': '+2347043738436'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 14:56:54] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
 INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:17:27] "[35m[1mPOST /auth/register HTTP/1.1[0m" 201 -
 ERROR:common.app:Exception on /auth/register [POST]
 Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedColumn: column "creator_id" of relation "organisation" does not exist
-LINE 1: ...RT INTO organisation ("orgId", name, description, creator_id...
-                                                             ^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "user_email_key"
+DETAIL:  Key (email)=(emmanuelomoiya7@gmail.com) already exists.
 
 
 The above exception was the direct cause of the following exception:
@@ -595,7 +416,7 @@ Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
     return register(data)
            ^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 35, in register
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 30, in register
     db.session.commit()
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
     return self._proxied.commit()
@@ -651,26 +472,216 @@ Traceback (most recent call last):
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "creator_id" of relation "organisation" does not exist
-LINE 1: ...RT INTO organisation ("orgId", name, description, creator_id...
-                                                             ^
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "user_email_key"
+DETAIL:  Key (email)=(emmanuelomoiya7@gmail.com) already exists.
+
+[SQL: INSERT INTO "user" ("userId", "firstName", "lastName", email, password, phone) VALUES (%(userId)s, %(firstName)s, %(lastName)s, %(email)s, %(password)s, %(phone)s)]
+[parameters: {'userId': '4f95c234-955a-463b-84d7-d09867e0f27c', 'firstName': 'Emmanuel', 'lastName': 'Omoiys', 'email': 'emmanuelomoiya7@gmail.com', 'password': b'$2b$12$4buMJUze.5Ba5vMGASUJfu39f3ui0FmJf3QiXFrmlkYiQ.gWXPqLa', 'phone': '+2347043738436'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:17:40] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+ERROR:common.app:Exception on /auth/register [POST]
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "user_userId_key"
+DETAIL:  Key ("userId")=(4f95c234-955a-463b-84d7-d09867e0f27c) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
+    return register(data)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 30, in register
+    password=hashed_password,
+    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2017, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1302, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1277, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4341, in flush
+    self._flush(objects)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4476, in _flush
+    with util.safe_reraise():
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4437, in _flush
+    flush_context.execute()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "user_userId_key"
+DETAIL:  Key ("userId")=(4f95c234-955a-463b-84d7-d09867e0f27c) already exists.
+
+[SQL: INSERT INTO "user" ("userId", "firstName", "lastName", email, password, phone) VALUES (%(userId)s, %(firstName)s, %(lastName)s, %(email)s, %(password)s, %(phone)s)]
+[parameters: {'userId': '4f95c234-955a-463b-84d7-d09867e0f27c', 'firstName': 'Emmanuel', 'lastName': 'Omoiya', 'email': 'emmanuelomoiya8@gmail.com', 'password': b'$2b$12$lbq8rhN5AGZ/j60sph9DaOqKPLId6flFu2FnsDxEPRWk0SgCFmWtW', 'phone': '+2347043738436'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:26:10] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:31:27] "[35m[1mPOST /auth/register HTTP/1.1[0m" 201 -
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:31:50] "[31m[1mPOST /auth/register HTTP/1.1[0m" 400 -
+ERROR:common.app:Exception on /auth/register [POST]
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "organisation_orgId_key"
+DETAIL:  Key ("orgId")=(56440dde-aacd-4f9f-b13c-a067a637bc9d) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
+    return register(data)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 40, in register
+    db.session.commit()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2017, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1302, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1277, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4341, in flush
+    self._flush(objects)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4476, in _flush
+    with util.safe_reraise():
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4437, in _flush
+    flush_context.execute()
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "organisation_orgId_key"
+DETAIL:  Key ("orgId")=(56440dde-aacd-4f9f-b13c-a067a637bc9d) already exists.
 
 [SQL: INSERT INTO organisation ("orgId", name, description, creator_id) VALUES (%(orgId)s, %(name)s, %(description)s, %(creator_id)s)]
-[parameters: {'orgId': '288d6895-826f-4ab8-b958-891e6c7b59f2', 'name': "Emmanuel's Organisation", 'description': None, 'creator_id': 'e4347f2c-38ff-4f41-a430-dd286725a4d3'}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 20:11:55] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
+[parameters: {'orgId': '56440dde-aacd-4f9f-b13c-a067a637bc9d', 'name': "Emmanuel's Organisation", 'description': None, 'creator_id': '388befc1-1572-401a-a7ab-288835925f83'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:32:04] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:33:52] "[31m[1mPOST /auth/register HTTP/1.1[0m" 400 -
 ERROR:common.app:Exception on /auth/register [POST]
 Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedColumn: column "orgId" of relation "organisation_user" does not exist
-LINE 1: INSERT INTO organisation_user ("orgId", "userId") VALUES ('b...
-                                       ^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "organisation_orgId_key"
+DETAIL:  Key ("orgId")=(56440dde-aacd-4f9f-b13c-a067a637bc9d) already exists.
 
 
 The above exception was the direct cause of the following exception:
@@ -694,106 +705,7 @@ Traceback (most recent call last):
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
     return register(data)
            ^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 39, in register
-    db.session.commit()
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
-    return self._proxied.commit()
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2017, in commit
-    trans.commit(_to_root=True)
-  File "<string>", line 2, in commit
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-                ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1302, in commit
-    self._prepare_impl()
-  File "<string>", line 2, in _prepare_impl
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
-    ret_value = fn(self, *arg, **kw)
-                ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1277, in _prepare_impl
-    self.session.flush()
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4341, in flush
-    self._flush(objects)
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4476, in _flush
-    with util.safe_reraise():
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4437, in _flush
-    flush_context.execute()
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
-    rec.execute(self)
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
-    _emit_insert_statements(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
-    result = connection.execute(
-             ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "orgId" of relation "organisation_user" does not exist
-LINE 1: INSERT INTO organisation_user ("orgId", "userId") VALUES ('b...
-                                       ^
-
-[SQL: INSERT INTO organisation_user ("orgId", "userId") VALUES (%(orgId)s, %(userId)s)]
-[parameters: {'orgId': 'bbab1c3d-10f5-4ff0-9de3-d2737eafda0b', 'userId': '5c9e482c-62e8-44f6-a797-3a84caf361d4'}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 20:33:15] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/register [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedTable: relation "user" does not exist
-LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
-                    ^
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 14, in registerMain
-    return register(data)
-           ^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 30, in register
+  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 40, in register
     db.session.commit()
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
     return self._proxied.commit()
@@ -849,275 +761,15 @@ Traceback (most recent call last):
     self.dialect.do_execute(
   File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
     cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
-LINE 1: INSERT INTO "user" ("userId", "firstName", "lastName", email...
-                    ^
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "organisation_orgId_key"
+DETAIL:  Key ("orgId")=(56440dde-aacd-4f9f-b13c-a067a637bc9d) already exists.
 
-[SQL: INSERT INTO "user" ("userId", "firstName", "lastName", email, password, phone) VALUES (%(userId)s, %(firstName)s, %(lastName)s, %(email)s, %(password)s, %(phone)s)]
-[parameters: {'userId': '53e117dc-404d-481e-b15a-3817ed8db89e', 'firstName': 'Emmanuel', 'lastName': 'Omoiya', 'email': 'emmanuelomoiya6@gmail.com', 'password': b'$2b$12$mi1ZIwgt7wF1vLkmR8n7OuvnzHwRQ4OFoEvuJr0p8s/o2F3OnzwV2', 'phone': '+2347043738436'}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 20:52:09] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 21:04:02] "[35m[1mPOST /auth/register HTTP/1.1[0m" 201 -
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 60, in login
-    if user and bcrypt.checkpw(data['password'].encode('utf-8'), bytes.fromhex(user.password)):
-                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: non-hexadecimal number found in fromhex() arg at position 0
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 21:05:03] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
+[SQL: INSERT INTO organisation ("orgId", name, description, creator_id) VALUES (%(orgId)s, %(name)s, %(description)s, %(creator_id)s)]
+[parameters: {'orgId': '56440dde-aacd-4f9f-b13c-a067a637bc9d', 'name': "Emmanuel's Organisation", 'description': None, 'creator_id': '17ada18b-0adc-4ff1-a404-e1b4fe405357'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:34:00] "[35m[1mPOST /auth/register HTTP/1.1[0m" 500 -
 INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 61, in login
-    if user and bcrypt.checkpw(data['password'].encode('utf-8'), bytes.fromhex(user.password)):
-                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: non-hexadecimal number found in fromhex() arg at position 0
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 21:09:19] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 61, in login
-    if user and bcrypt.checkpw(data['password'].encode('utf-8'), bytes.fromhex(user.password)):
-                                                                               ^^^^^^^^^^^^^
-AttributeError: 'Query' object has no attribute 'password'
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 21:13:51] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 60, in login
-    print(user[0])
-          ~~~~^^^
-TypeError: 'User' object is not subscriptable
-INFO:werkzeug:127.0.0.1 - - [06/Jul/2024 21:18:28] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 60, in login
-    print(user["password"])
-          ~~~~^^^^^^^^^^^^
-TypeError: 'User' object is not subscriptable
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 06:40:41] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 59, in login
-    user = User.query.filter_by(email=data['email']).first().toDict()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'User' object has no attribute 'toDict'
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 06:44:41] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 59, in login
-    user = User.query.filter_by(email=data['email']).first().toDict()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'User' object has no attribute 'toDict'
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:24:02] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-ERROR:common.app:Exception on /auth/login [POST]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\auth_route.py", line 9, in loginMain
-    return login(data)
-           ^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\auth\auth_controller.py", line 61, in login
-    if user and bcrypt.checkpw(data['password'].encode('utf-8'), bytes.fromhex(user.password)):
-                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: non-hexadecimal number found in fromhex() arg at position 0
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:24:56] "[35m[1mPOST /auth/login HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:27:57] "POST /auth/login HTTP/1.1" 200 -
-ERROR:common.app:Exception on /api/users/53e117dc-404d-481e-b15a-3817ed8db89e [GET]
-Traceback (most recent call last):
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_cors\extension.py", line 178, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-                                                ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\routes\user_route.py", line 10, in getUser
-    return get_user(id)
-           ^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\modules\user\user_controller.py", line 6, in get_user
-    current_user_id = get_jwt_identity()
-                      ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_jwt_extended\utils.py", line 63, in get_jwt_identity
-    return get_jwt().get(config.identity_claim_key, None)
-           ^^^^^^^^^
-  File "C:\Users\USER\Documents\Projects\hng\backend\stage-2\venv\Lib\site-packages\flask_jwt_extended\utils.py", line 29, in get_jwt
-    raise RuntimeError(
-RuntimeError: You must call `@jwt_required()` or `verify_jwt_in_request()` before using this method
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:29:09] "[35m[1mGET /api/users/53e117dc-404d-481e-b15a-3817ed8db89e HTTP/1.1[0m" 500 -
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:32:17] "POST /auth/login HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:32:37] "GET /api/users/53e117dc-404d-481e-b15a-3817ed8db89e HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:33:04] "GET /api/organisations HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:33:34] "[31m[1mGET /api/organisations/55421f76-1144-497a-a536-d43ffa08021e" HTTP/1.1[0m" 403 -
-INFO:werkzeug:127.0.0.1 - - [07/Jul/2024 12:34:03] "GET /api/organisations/55421f76-1144-497a-a536-d43ffa08021e HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:34:37] "[35m[1mPOST /auth/register HTTP/1.1[0m" 201 -
+INFO:werkzeug:127.0.0.1 - - [09/Jul/2024 15:34:44] "[35m[1mPOST /auth/register HTTP/1.1[0m" 201 -

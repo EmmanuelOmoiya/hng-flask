@@ -14,6 +14,11 @@ def register(data):
 
     if validation_errors:
         return jsonify({"errors": validation_errors}), 422
+
+    existing_user = User.query.filter_by(email=data['email']).first()
+    if existing_user:
+        return jsonify({"status": "Bad request","message": "Registration unsuccessful - account with this email already exists", "statusCode": 400}), 400
+ 
     salt = bcrypt.gensalt()     
     hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), salt)
     # hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
