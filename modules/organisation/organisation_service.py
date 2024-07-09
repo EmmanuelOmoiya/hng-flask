@@ -1,8 +1,9 @@
 from flask import jsonify
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from modules.organisation.organisation_model import Organisation, OrganisationUser
 from db.db import db
 
+@jwt_required()
 def create_organisation_main(data):
     current_user_id = get_jwt_identity()
 
